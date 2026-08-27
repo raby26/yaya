@@ -470,26 +470,32 @@
     setInterval(createHeart, 400);
 
     /* TUKAR HALAMAN */
-    function nextPage(pageNumber) {
-      document.querySelectorAll(".page").forEach(page => {
-        page.classList.remove("active");
-      });
+function nextPage(pageNumber) {
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
 
-      document.getElementById("page" + pageNumber).classList.add("active");
+  document.getElementById("page" + pageNumber).classList.add("active");
 
-      /* VIDEO */
-      if (pageNumber === 6) {
-        const video = document.getElementById("endingVideo");
-        const music = document.getElementById("bgMusic");
+  /* VIDEO */
+  if (pageNumber === 6) {
+    const video = document.getElementById("endingVideo");
+    const music = document.getElementById("bgMusic");
 
-        // Perlahankan / hentikan muzik latar supaya audio video jelas
-        music.pause();
-        playing = false;
+    // Hentikan lagu latar supaya bunyi video dengar jelas
+    music.pause();
+    playing = false;
 
-        video.currentTime = 0;
-        video.play().catch(() => {});
-      }
-    }
+    // Pastikan video tidak di-mute & main dari awal
+    video.muted = false;
+    video.currentTime = 0;
+    
+    // Mainkan video
+    video.play().catch(error => {
+      console.log("Autoplay dengan bunyi disekat oleh pelayar. Sila tekan butang Play pada video.");
+    });
+  }
+}
 
     /* BUTANG "DOKKK" */
     const noBtn = document.getElementById("noBtn");
